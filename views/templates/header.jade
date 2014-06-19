@@ -1,0 +1,16 @@
+
+nav.navbar.navbar-default(role='navigation')
+	.container
+		.navbar-header
+			strong.navbar-brand
+				| {{CONFIG.NAME}} v{{CONFIG.VERSION}}
+
+		.navbar-collapse.collapse
+
+			ul.nav.navbar-nav
+				li(ng-repeat='menu in menus', ng-class='path() == menu.href ? "active" : ""')
+					a(href='{{menu.href}}') {{menu.label}}
+
+				li
+					a(ng-click='modal.about()')
+						| About

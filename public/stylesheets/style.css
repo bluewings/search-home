@@ -1,0 +1,51 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+body {
+  padding: 0 !important;
+  margin: 0;
+  background-color: white;
+  word-break: break-all;
+  font-family: Nanum Gothic,AppleGothic,sans-serif;
+  font-size: 12px; }
+
+.dropdown-menu {
+  min-width: 0;
+  font-size: 12px; }
+  .dropdown-menu li {
+    text-align: left; }
+
+a {
+  color: #00B7FF; }
+
+.modal .modal-dialog {
+  outline: none; }
+  .modal .modal-dialog .modal-header {
+    padding: 10px 15px; }
+    .modal .modal-dialog .modal-header .modal-title {
+      font-family: Play;
+      font-size: 14px; }
+      .modal .modal-dialog .modal-header .modal-title .glyphicon {
+        vertical-align: middle;
+        margin-right: 8px;
+        top: -1px; }
+  .modal .modal-dialog .modal-body {
+    padding: 15px; }
+  .modal .modal-dialog .modal-footer {
+    padding: 15px;
+    margin-top: 0; }
+    .modal .modal-dialog .modal-footer .btn .glyphicon {
+      margin: 0 6px 0 -1px;
+      top: -1px;
+      vertical-align: middle; }
+.modal .modal-about h1, .modal .modal-about h2, .modal .modal-about h3, .modal .modal-about h4, .modal .modal-about h5, .modal .modal-about h6 {
+  font-family: Play;
+  font-weight: bold;
+  margin-top: 0; }
+.modal .modal-about .well {
+  margin-top: 15px;
+  margin-bottom: 0; }
+.modal .modal-about .modal-body {
+  padding: 15px 20px; }
+.modal .modal-about .modal-footer {
+  padding: 15px 20px; }
+
+/*# sourceMappingURL=style.css.map */

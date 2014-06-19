@@ -1,0 +1,22 @@
+.modal-about
+	.modal-body
+
+		h1 {{CONFIG.NAME}}
+
+		h4 Version {{CONFIG.VERSION}}
+		
+		.well
+			h5 Authors
+			ul.list-group
+				li.list-group-item(ng-repeat='author in CONFIG.AUTHORS')
+					| {{author.NAME}} ({{author.EMAIL}})
+
+			h5 Updated {{CONFIG.UPDATED}}
+
+		h5(style='font-weight:normal;text-align:center;margin-top:10px;')
+			Copyright © 2014 NAVER BUSINESS PLATFORM Corp. All Rights Reserved.
+
+	.modal-footer
+		.pull-right
+			button.btn.btn-sm.btn-default(ng-click='func.close()')
+				| Close

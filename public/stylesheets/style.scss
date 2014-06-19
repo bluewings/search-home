@@ -1,0 +1,30 @@
+$header-font: Play;
+$default-font-size: 12px;
+$default-bg-color: white;
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+body {
+    padding: 0 !important;
+    margin: 0;
+    background-color: $default-bg-color;
+    word-break: break-all;
+    font-family: Nanum Gothic,AppleGothic,sans-serif;
+    font-size: $default-font-size;
+}
+
+.dropdown-menu {
+    min-width: 0;
+    font-size: 12px;
+    li {
+        text-align: left;
+    }
+}
+
+a {
+    color: #00B7FF;
+}
+
+@import "style-header";
+@import "style-content";
+@import "style-modal";

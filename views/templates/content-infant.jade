@@ -1,0 +1,44 @@
+
+table.form-table(border='0', cellspacing='0', cellpadding='0')
+	colgroup
+		col(width='110px')
+		col
+	tbody
+		tr
+			th
+				| Query
+
+			td(valign='top')
+				.input-group.input-group-sm
+					input.form-control(type='text', ng-model='conditions.search')
+					span.input-group-btn
+						button.btn.btn-default(type='button',
+							ng-click='func.submit()')
+							| Submit!
+
+		tr
+			th
+				| Ranges
+
+			td(valign='top')
+				.btn-group
+					button.btn.btn-default(type='button',
+						ng-repeat='range in conditions.ranges',
+						ng-class='range.value == conditions.range ? "btn-primary" : ""',
+						ng-click='conditions.range = range.value')
+						| {{range.label}}
+
+		tr
+			th
+				| Topics
+			td(valign='top')
+
+h3 검색결과 (서버 갔다왔음)
+
+pre
+	| {{result | json}}
+
+h3 검색조건 (디버깅용)
+
+pre
+	| {{conditions | json}}

@@ -81,13 +81,22 @@ router.delete('/:id', function (req, res) {
 
 router.put('/:id/note/:_id', function (req, res) {
 
+var set = {};
+for (var field in req.body) {
+    if (req.body.hasOwnProperty(field)) {
+    set['notes.$.' + field] = req.body[field];      
+    }
+  
+}    
+
     User.update({
         id: req.params.id,
         'notes._id': req.params._id
     }, {
-        $set: {
+        $set: set
+        /*{
             'notes.$.title': 'updated'
-        }
+        }*/
     }, function (err, data) {
 
         res.jsonp({

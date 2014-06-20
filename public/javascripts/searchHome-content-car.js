@@ -66,7 +66,8 @@
     			});
     		},   
             editNote: function(user, note) {
-                UserNote.update({id: user.id, _id: note._id}, function(data) {
+                var title = prompt('message?');
+                UserNote.update({id: user.id, _id: note._id}, {title:title},function(data) {
 
     				console.log(data);
     				$scope.User.get();

@@ -18,7 +18,16 @@
 
     app.factory('UserNote', ['$resource', function($resource) {
 
-    	var userResource = $resource('/user/:id/note/:_id');
+    	var userResource = $resource('/user/:id/note/:_id', null,
+       {
+           'update': { method:'PUT',
+                 params: {
+                            id: '@id',
+                            _id: '@_id'
+                        }
+                    }
+
+       });
 
     	return userResource;
 
@@ -56,8 +65,9 @@
 
     			});
     		},   
-    		editNote: function(user, note) {
-    			UserNote.save({id: user.id, _id: note._id}, function(data) {
+            editNote: function(user, note) {
+                UserNote.update({id: user.id, _id: note._id}, function(data) {
+
     				console.log(data);
     				$scope.User.get();
     			}, function() {

@@ -6,6 +6,12 @@ var User = model.User,
     Note = model.Note,
     Share = model.Share;
 
+
+function uid() {
+
+    return (parseInt(Math.random() * 900000000 + 100000000, 10)).toString(36).substr(0, 6);
+}
+
 router.get('/', function (req, res) {
 
     User.find({}, function (err, data) {
@@ -23,7 +29,7 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
 
     User.create({
-        id: parseInt(Math.random() * 100000)
+        id: uid()
     }, function (err, data) {
 
         res.jsonp({
@@ -73,14 +79,14 @@ router.delete('/:id', function (req, res) {
     });
 });
 
-router.post('/:id/note/:_id', function (req, res) {
+router.put('/:id/note/:_id', function (req, res) {
 
-    User.findOneAndUpdate({
+    User.update({
         id: req.params.id,
-        'note._id': req.params.id
+        'notes._id': req.params._id
     }, {
         $set: {
-            title: 'updated'
+            'notes.$.title': 'updated'
         }
     }, function (err, data) {
 

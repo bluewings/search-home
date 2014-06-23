@@ -14,6 +14,7 @@ function uid() {
     return (parseInt(Math.random() * 900000000 + 100000000, 10)).toString(36).substr(0, 6);
 }
 
+
 router.get('/', function (req, res) {
 
     User.find({}, function (err, data) {
@@ -36,6 +37,31 @@ router.post('/', function (req, res) {
     });
 });
 
+router.put('/:userId', function (req, res) {
+
+    User.remove({
+        userId: req.params.userId
+    }, function (err, data) {
+        res.jsonp({
+            status: SUCCESS,
+            data: data
+        });
+    });
+});
+
+router.delete('/:userId', function (req, res) {
+
+    User.remove({
+        userId: req.params.userId
+    }, function (err, data) {
+        res.jsonp({
+            status: SUCCESS,
+            data: data
+        });
+    });
+});
+
+
 router.post('/:userId/note', function (req, res) {
 
     User.update({
@@ -47,22 +73,6 @@ router.post('/:userId/note', function (req, res) {
             }
         }
     }, function (err, data) {
-        res.jsonp({
-            code: 200,
-            message: 'ok',
-            result: {
-                data: data
-            }
-        });
-    });
-});
-
-router.delete('/:userId', function (req, res) {
-
-    User.remove({
-        userId: req.params.userId
-    }, function (err, data) {
-
         res.jsonp({
             code: 200,
             message: 'ok',

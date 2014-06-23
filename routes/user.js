@@ -6,6 +6,8 @@ var User = model.User,
     Note = model.Note,
     Share = model.Share;
 
+var SUCCESS = 'success',
+    ERROR = 'error';
 
 function uid() {
 
@@ -15,13 +17,9 @@ function uid() {
 router.get('/', function (req, res) {
 
     User.find({}, function (err, data) {
-
         res.jsonp({
-            code: 200,
-            message: 'ok',
-            result: {
-                data: data
-            }
+            status: SUCCESS,
+            data: data
         });
     });
 });
@@ -29,23 +27,19 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
 
     User.create({
-        id: uid()
+        userId: uid()
     }, function (err, data) {
-
         res.jsonp({
-            code: 200,
-            message: 'ok',
-            result: {
-                data: data
-            }
+            status: SUCCESS,
+            data: data
         });
     });
 });
 
-router.post('/:id/note', function (req, res) {
+router.post('/:userId/note', function (req, res) {
 
     User.update({
-        id: req.params.id
+        userId: req.params.userId
     }, {
         $push: {
             notes: {
@@ -63,10 +57,10 @@ router.post('/:id/note', function (req, res) {
     });
 });
 
-router.delete('/:id', function (req, res) {
+router.delete('/:userId', function (req, res) {
 
     User.remove({
-        id: req.params.id
+        userId: req.params.userId
     }, function (err, data) {
 
         res.jsonp({
@@ -79,18 +73,18 @@ router.delete('/:id', function (req, res) {
     });
 });
 
-router.put('/:id/note/:_id', function (req, res) {
+router.put('/:userId/note/:_id', function (req, res) {
 
-var set = {};
-for (var field in req.body) {
-    if (req.body.hasOwnProperty(field)) {
-    set['notes.$.' + field] = req.body[field];      
+    var set = {};
+    for (var field in req.body) {
+        if (req.body.hasOwnProperty(field)) {
+            set ['notes.$.' + field] = req.body[field];
+        }
+
     }
-  
-}    
 
     User.update({
-        id: req.params.id,
+        userId: req.params.userId,
         'notes._id': req.params._id
     }, {
         $set: set
@@ -110,10 +104,10 @@ for (var field in req.body) {
 });
 
 
-router.delete('/:id/note/:_id', function (req, res) {
+router.delete('/:userId/note/:_id', function (req, res) {
 
     User.findOneAndUpdate({
-        id: req.params.id,
+        userId: req.params.userId,
     }, {
         $pull: {
             notes: {
@@ -137,7 +131,7 @@ router.get('/addNote', function (req, res) {
     var id = "0.2318615757394582";
 
     User.update({
-        id: id
+        userId: id
     }, {
         $push: {
             notes: {

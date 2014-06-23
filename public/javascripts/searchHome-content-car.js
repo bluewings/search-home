@@ -8,114 +8,130 @@
 
     app = angular.module('searchHome-content-car', ['ui.bootstrap', 'ngResource']);
 
-    app.factory('User', ['$resource', function($resource) {
+    app.factory('User', ['$resource',
+        function ($resource) {
 
-    	var userResource = $resource('/user/:id');
+            var userResource = $resource('/user/:userId');
 
-    	return userResource;
+            return userResource;
 
-    }]);
+        }
+    ]);
 
-    app.factory('UserNote', ['$resource', function($resource) {
+    app.factory('UserNote', ['$resource',
+        function ($resource) {
 
-    	var userResource = $resource('/user/:id/note/:_id', null,
-       {
-           'update': { method:'PUT',
-                 params: {
-                            id: '@id',
-                            _id: '@_id'
-                        }
+            var userResource = $resource('/user/:userId/note/:_id', null, {
+                'update': {
+                    method: 'PUT',
+                    params: {
+                        userId: '@id',
+                        _id: '@_id'
                     }
+                }
 
-       });
+            });
 
-    	return userResource;
+            return userResource;
 
-    }]);    
+        }
+    ]);
 
     app.controller('searchHome.content.car', function ($scope, $modal, User, UserNote) {
 
-    	$scope.data = {
+        $scope.data = {
 
-    		users: []
+            users: []
 
-    	};
+        };
 
-    	
 
-    	$scope.User = {
 
-    		create: function() {
-    			User.save({}, {}, function(data) {
-    				console.log(data);
-    				$scope.User.get();
-    			}, function() {
+        $scope.User = {
 
-    				console.log('err');
+            create: function () {
+                User.save({}, {}, function (data) {
+                    console.log(data);
+                    $scope.User.get();
+                }, function () {
 
-    			});
-    		},
-    		addNote: function(user) {
-    			UserNote.save({id:user.id}, {}, function(data) {
-    				console.log(data);
-    				$scope.User.get();
-    			}, function() {
+                    console.log('err');
 
-    				console.log('err');
+                });
+            },
+            addNote: function (user) {
+                UserNote.save({
+                    userId: user.userId
+                }, {}, function (data) {
+                    console.log(data);
+                    $scope.User.get();
+                }, function () {
 
-    			});
-    		},   
-            editNote: function(user, note) {
+                    console.log('err');
+
+                });
+            },
+            editNote: function (user, note) {
                 var title = prompt('message?');
-                UserNote.update({id: user.id, _id: note._id}, {title:title},function(data) {
+                UserNote.update({
+                    userId: user.userId,
+                    _id: note._id
+                }, {
+                    title: title
+                }, function (data) {
 
-    				console.log(data);
-    				$scope.User.get();
-    			}, function() {
+                    console.log(data);
+                    $scope.User.get();
+                }, function () {
 
-    				console.log('err');
+                    console.log('err');
 
-    			});    			
+                });
 
-    		}, 
-    		removeNote: function(user, note) {
-    			UserNote.remove({id: user.id, _id: note._id}, function(data) {
-    				console.log(data);
-    				$scope.User.get();
-    			}, function() {
+            },
+            removeNote: function (user, note) {
+                UserNote.remove({
+                    userId: user.userId,
+                    _id: note._id
+                }, function (data) {
+                    console.log(data);
+                    $scope.User.get();
+                }, function () {
 
-    				console.log('err');
+                    console.log('err');
 
-    			});    			
+                });
 
-    		},    				
-    		get: function() {
+            },
+            get: function () {
 
 
-    			User.get({}, function(data) {
-    				//console.log(data);
-    				$scope.data.users = data.result.data;
-    			}, function() {
+                User.get({}, function (result) {
+                    //console.log(data);
+                    $scope.data.users = result.data;
+                }, function () {
 
-    				console.log('err');
+                    console.log('err');
 
-    			});
-    		},
-    		remove: function(user) {
-    			User.remove({id: user.id}, function(data) {
-    				console.log(data);
-    				$scope.User.get();
-    			}, function() {
+                });
+            },
+            remove: function (user) {
+                User.remove({
+                    userId: user.userId
+                }, function (data) {
+                    console.log(data);
+                    $scope.User.get();
+                }, function () {
 
-    				console.log('err');
+                    console.log('err');
 
-    			});    			
+                });
 
-    		}
+            }
 
-    	};
+        };
 
-    	$scope.User.get();
+        $scope.User.get();
 
 
 

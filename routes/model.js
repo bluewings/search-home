@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var db = mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connect('mongodb://localhost/sample');
 
 var noteSchema,
     userSchema,
@@ -21,11 +21,15 @@ noteSchema = new Schema({
 });
 
 userSchema = new Schema({
-    id: {
+    userId: {
         type: String,
         required: true,
         unique: true
     },
+    created: {
+        type: Date,
+        default: Date.now
+    },    
     notes: [noteSchema],
     shared: [{
         id: {

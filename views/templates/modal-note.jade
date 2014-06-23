@@ -1,0 +1,11 @@
+.modal-about
+	.modal-body
+		input.form-control.input-sm(type='text', ng-model='data.title')
+		input.form-control.input-sm(type='text', ng-model='data.note')
+
+	.modal-footer
+		.pull-right
+			button.btn.btn-sm.btn-default(ng-click='func.submit()')
+				| Confirm
+			button.btn.btn-sm.btn-default(ng-click='func.close()')
+				| Close

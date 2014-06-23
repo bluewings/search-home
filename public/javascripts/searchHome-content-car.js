@@ -41,8 +41,109 @@
 
         $scope.data = {
 
-            users: []
+            users: [],
+            selectedUser: null
 
+        };
+
+        $scope.func = {
+            selectUser: function(user) {
+                $scope.data.selectedUser = user;
+                console.log(user);
+            }
+        };
+
+        $scope.modal = {
+            note: function(user, note) {
+
+                var modalInstance;
+
+
+
+
+                modalInstance = $modal.open({
+                    templateUrl: '/templates/modal-note',
+                    size: 'sm',
+                    resolve: {
+                        data: function() {
+                            var data;
+                            data = {
+                                userId: user.userId
+                            };
+                            data = $.extend(data, note || {});
+                            return data;
+                        }
+                    },
+                    controller: function ($scope, data) {
+
+                        console.log(data);
+                        $scope.data = data;
+
+                        $scope.func = {
+                            submit: function() {
+
+
+
+                        
+
+                                //$scope.func = Object.create($scope.$parent.$root.func);
+
+                            UserNote.save($scope.data, {}, function (data) {
+                                console.log(data);
+                modalInstance.close();                
+                            }, function () {
+
+                
+                    //method: 'update',
+                    //data: $scope.note
+                //});                                                        
+
+                                console.log('err');
+
+                            });
+
+                            },
+                            close: function () {
+                                modalInstance.dismiss();
+                            }
+                        };
+                    }
+                });
+
+
+                    modalInstance.result.then(function (result) {
+
+                        $scope.User.get();
+                        
+                        
+
+                        //$rootScope.note.add(result.data);
+                    });
+
+            },
+            showJSON: function(jsonData) {
+
+                var modalInstance;
+
+
+
+                modalInstance = $modal.open({
+                    templateUrl: '/templates/modal-json',
+                    size: 'sm',
+                    controller: function ($scope) {
+
+                        $scope.json = jsonData;
+
+                        $scope.func = {
+                            close: function () {
+                                modalInstance.dismiss();
+                            }
+                        };
+                    }
+                });                
+                //$scope.data.selectedUser = user;
+                //console.log(user);
+            }
         };
 
 
@@ -107,8 +208,30 @@
 
 
                 User.get({}, function (result) {
+                    var found = false;
+                    console.log('aaaabb');
                     //console.log(data);
                     $scope.data.users = result.data;
+                    if ($scope.data.selectedUser) {
+                        console.log(result.data);
+                        angular.forEach(result.data, function(item) {
+
+                            console.log('>>>');
+
+                            console.log(item);
+
+                            if ($scope.data.selectedUser.userId === item.userId) {
+                                $scope.data.selectedUser = item;
+                                found = true;
+                                return false;
+                            }
+                        });    
+                    }
+                    if (found === false) {
+                        $scope.data.selectedUser = null;
+
+                    }
+                    
                 }, function () {
 
                     console.log('err');
